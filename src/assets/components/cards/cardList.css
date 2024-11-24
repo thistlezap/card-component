@@ -1,0 +1,20 @@
+.card-list {
+  --card-list-item-padding: 1rem;
+  --card-list-item-border-radius: .25rem;
+  --card-list-item-color-background: var(--petrol-grey-2);
+  --card-list-item-color-text: var(--black);
+  display: grid;
+  gap: var(--row-gap) var(--column-gap);
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+  }
+}

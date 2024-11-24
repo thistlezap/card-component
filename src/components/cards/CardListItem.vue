@@ -1,20 +1,17 @@
 <script setup lang="ts">
-  import { ref, computed, defineProps } from 'vue'
+  import { ref, computed } from 'vue'
   import type { CardListItemType } from '@/types/index'
 
+  const emit = defineEmits(['action_media', 'action_content'])
   const props = defineProps<CardListItemType>()
 
   const isHovered = ref(false)
 
-  const emit = defineEmits(['action_media', 'action_content'])
-
   function handleMediaClick() {
-    console.log('action_media', { title: props.title, id: props.id })
     emit('action_media', { title: props.title, id: props.id });
   }
   
   function handleTitleClick() {
-    console.log('action_content', { title: props.title, id: props.id })
     emit('action_content', { title: props.title, id: props.id });
   }
 
@@ -35,8 +32,8 @@
     @mouseleave="isHovered = false">
 
     <div class="item-content">
-      <a class="image-container" @click="handleMediaClick">
-        <img v-if="image" :src="image.src" :alt="image.alt" />
+      <a class="image-container image-link" @click="handleMediaClick">
+        <img class="item-image" v-if="image" :src="image.src" :alt="image.alt" />
       </a>
 
       <div class="tags" v-if="props.tags">
@@ -46,7 +43,7 @@
       <hgroup>
         <p class="super-title" v-if="superTitle">{{ superTitle }}:</p>
         <h2 class="title">
-          <a @click="handleTitleClick">{{ heading }}</a>
+          <a class="text-link" @click="handleTitleClick">{{ heading }}</a>
         </h2>
       </hgroup>
       
@@ -55,57 +52,3 @@
 
   </article>
 </template>
-
-<style scoped>
-.card-list-item {
-  display: grid;
-  align-content: start;
-  
-  .item-content {
-    padding: var(--card-list-item-padding);
-    color: var(--card-list-item-color-text);
-    background-color: var(--card-list-item-color-background);
-    border-radius: var(--card-list-item-border-radius);
-    display: grid;
-    align-content: start;
-    gap: 0.5rem;
-  }
-
-  .image-container {
-    border-radius: 4px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-
-    .tag {
-      font-size: 0.75rem;
-      opacity: .7;
-
-      & + .tag {
-        &::before {
-          content: '|';
-          margin: 0 .2rem;
-        }
-      }
-    }
-  }
-
-  .title,
-  .description {
-    hyphens: auto;
-  }
-
-  .title {
-    font-size: 1.2rem;
-  }
-}
-</style>
