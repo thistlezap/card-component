@@ -1,24 +1,49 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import CardList from './components/cards/CardList.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    
   </header>
 
   <main>
-    <TheWelcome />
+    <section class="layout">
+      <CardList />  
+    </section>
   </main>
 </template>
 
 <style scoped>
-header {
+.layout {
+  display: grid;
+  gap: var(--row-gap) var(--column-gap);
+
+  grid-template-columns: repeat(4, 1fr);
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .component {
+    grid-column: span 4;
+
+    @media (min-width: 1024px) {
+      grid-column: span 12;
+    }
+
+    &:not(.-wide) {
+      @media (min-width: 1024px) {
+        grid-column: 2 / span 10;
+      }
+
+      @media (min-width: 1200px) {
+        grid-column: 3 / span 8;
+      }
+    }
+  }
+}
+/* header {
   line-height: 1.5;
 }
 
@@ -38,10 +63,12 @@ header {
     margin: 0 2rem 0 0;
   }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  header {
+    .wrapper {
+      display: flex;
+      place-items: flex-start;
+      flex-wrap: wrap;
+    }
   }
-}
+} */
 </style>
