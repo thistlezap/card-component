@@ -15,6 +15,10 @@
     emit('action_content', { title: props.title, id: props.id });
   }
 
+  function handleHover(bool: boolean) {
+    isHovered.value = bool
+  }
+
   const heading = computed(() => {
     if (props.title.length <= 30) return props.title
     return `${props.title.slice(0, 30)}[...]`
@@ -28,12 +32,12 @@
 
 <template>
   <article class="card-list-item"
-    @mouseover="isHovered = true"
-    @mouseleave="isHovered = false">
+    @mouseover="handleHover(true)"
+    @mouseleave="handleHover(false)">
 
     <div class="item-content">
-      <a class="image-container image-link" @click="handleMediaClick">
-        <img class="item-image" v-if="image" :src="image.src" :alt="image.alt" />
+      <a class="image-container" v-if="image" @click="handleMediaClick">
+        <img class="item-image" :src="image.src" :alt="image.alt" />
       </a>
 
       <div class="tags" v-if="props.tags">
@@ -52,3 +56,5 @@
 
   </article>
 </template>
+
+<style scoped></style>
